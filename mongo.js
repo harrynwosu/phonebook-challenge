@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 if (process.argv.length < 3){
-    console.log("give at least password as argument");
+    console.log('give at least password as argument');
     process.exit(1);
 }
 
@@ -17,27 +17,26 @@ mongoose.connect(url);
 const personSchema = new mongoose.Schema({
     name: String,
     number: String,
-})
+});
 
 const Person = mongoose.model('Person', personSchema);
 
 if (personName) {
     const person = new Person({
         name: personName,
-        number: personNumber ?? "",
-    })
-    
+        number: personNumber ?? '',
+    });
     person.save().then(result => {
         console.log(`added ${personName} number ${personNumber} to phonebook`);
         mongoose.connection.close();
-    })
+    });
 } else {
     Person.find({}).then(result => {
         console.log('phonebook:');
         result.forEach(person => {
-            console.log(`${person.name}: ${person.number}`)
+            console.log(`${person.name}: ${person.number}`);
         });
         mongoose.connection.close();
-    })
+    });
 }
 
